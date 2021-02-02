@@ -2,7 +2,7 @@ try:
     import requests
     import sys
     from bs4 import BeautifulSoup
-    from scrap_one_book import get_title, put_book_info_in_csv, get_book_info, download_book_image
+    from P2_01_scrap_one_book import get_title, put_book_info_in_csv, get_book_info, download_book_image
     import csv
     import os.path
     from os import path
