@@ -2,7 +2,7 @@ try:
     import requests
     import sys
     from bs4 import BeautifulSoup
-    from P2_01_scrap_one_book import get_title, put_book_info_in_csv, get_book_info, download_book_image
+    from P2_01_scrap_one_book import check_files, get_title, put_book_info_in_csv, get_book_info, download_book_image
     import csv
     import os.path
     from os import path
@@ -40,15 +40,12 @@ def get_category(url):
     """
     Return an array of all categories, used to check if a file already exists
     """
-    category_array = []
     response = requests.get(url)
     if(response.ok):
         soup = BeautifulSoup(response.text, 'lxml')
-        links = soup.find('ul', {'class': 'nav-list'})
-        links = links.find_all('a')
-        for link in links:
-            category_array.append(link.text.strip())
-        return category_array
+        category = soup.find('div', {'class': 'page-header'})
+        category = category.find('h1')
+    return category.text
 
 
 def get_books_url(url):
@@ -92,10 +89,9 @@ def put_books_info_in_csv(url):
 if __name__ == '__main__':
     try:
         url = sys.argv[1]
-        category_array = get_category(url)
-        for category in category_array:
-            if os.path.exists(f"./books_csv/{category}.csv"):
-                os.remove(f"./books_csv/{category}.csv")
+        get_category(url)
+        category = get_category(url)
+        check_files(category)
         put_books_info_in_csv(url)
         print('\n**** Success ****\n')
     except IndexError:
