@@ -27,8 +27,8 @@ Sur Windows :
 $ git clone https://github.com/VictorTherache/P2_Therache_Victor.git
 $ cd P2_Therache_Victor/
 $ pip3 install -r requirements.txt 
-$ py P2_01_scrap_one_book https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
-  or py P2_02_scrap_one_cateogory https://books.toscrape.com/catalogue/category/books/poetry_23/index.html
+$ py P2_01_scrap_one_book.py https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
+  or py P2_02_scrap_one_cateogory.py https://books.toscrape.com/catalogue/category/books/poetry_23/index.html
   or py P2_03_scrap_all.py
 ```
 ```
@@ -36,8 +36,8 @@ Sur Linux/Mac :
 $ git clone https://github.com/VictorTherache/P2_Therache_Victor.git
 $ cd P2_Therache_Victor/
 $ pip3 install -r requirements.txt 
-$ python P2_01_scrap_one_book https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
-  or python P2_02_scrap_one_cateogory https://books.toscrape.com/catalogue/category/books/poetry_23/index.html
+$ python P2_01_scrap_one_book.py https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
+  or python P2_02_scrap_one_cateogory.py https://books.toscrape.com/catalogue/category/books/poetry_23/index.html
   or python P2_03_scrap_all.py
 ```
 Merci d'avoir téléchargé ce projet :) 
