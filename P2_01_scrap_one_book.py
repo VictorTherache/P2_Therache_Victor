@@ -128,11 +128,12 @@ def download_book_image(url):
     soup = BeautifulSoup(response.text, 'lxml')
     img_url = get_image_url(soup)
     title = remove_special_char(url)
-    if not os.path.exists('./image_folder'):
-        os.mkdir('image_folder')
-    if not os.path.exists(f"./image_folder/{title}.jpg"):
+    book_info = get_book_info(url)
+    category = book_info[0][4]    # if not os.path.exists('./image_folder'):
+    #     os.mkdir('image_folder')
+    if not os.path.exists(f"./books_csv/{category}/{title}.jpg"):
         response = requests.get(img_url, stream=True)
-        with open(f"./image_folder/{title}.jpg", "wb") as f:
+        with open(f"./books_csv/{category}/{title}.jpg", "wb") as f:
             response.raw.decode_content = True
             shutil.copyfileobj(response.raw, f)
 
@@ -146,9 +147,9 @@ def put_book_info_in_csv(url):
     headers = ['url', 'upc', 'title', 'price_including_taxe', 'price_excluding_taxe', 
                'number_available', 'product_description', 'category', 'review_rating',
                'image_url']
-    with open(f'./books_csv/{category}.csv', 'a', newline='', encoding='utf-8') as outfile:
+    with open(f'./books_csv/{category}/{category}.csv', 'a', newline='', encoding='utf-8') as outfile:
         writer = csv.DictWriter(outfile, fieldnames = headers)
-        if os.stat(f'./books_csv/{category}.csv').st_size == 0: #check if file is empty so we can add headers
+        if os.stat(f'./books_csv/{category}/{category}.csv').st_size == 0: #check if file is empty so we can add headers
             writer.writeheader()
         writer.writerow({'url' : url, 
                          'upc': book_info[0][2][0], 
@@ -161,17 +162,20 @@ def put_book_info_in_csv(url):
                          'review_rating': book_info[0][3], 
                          'image_url': book_info[0][5]})
     
+def check_files(category):
+    category = category
+    if os.path.exists(f"./books_csv/{category}/{category}.csv"):
+        os.remove(f"./books_csv/{category}/{category}.csv")
+    if not os.path.exists(f'./books_csv/{category}'):
+        # os.mkdir(f'./books_csv')
+        os.mkdir(f'./books_csv/{category}')
     
 if __name__ == '__main__':  
     try:
         url = sys.argv[1]
         book_info = get_book_info(url)
         category = book_info[0][4]
-        if os.path.exists(f"./books_csv/{category}.csv"):
-            print('OUI')
-            os.remove(f"./books_csv/{category}.csv")
-        if not os.path.exists('./books_csv'):
-            os.mkdir('./books_csv')
+        check_files(category)
         put_book_info_in_csv(url)
         download_book_image(url)
         print('\n**** Success ****\n')
