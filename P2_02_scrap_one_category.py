@@ -94,8 +94,8 @@ if __name__ == '__main__':
         url = sys.argv[1]
         category_array = get_category(url)
         for category in category_array:
-            if os.path.exists(f"{category}.csv"):
-                os.remove(f"{category}.csv")
+            if os.path.exists(f"./books_csv/{category}.csv"):
+                os.remove(f"./books_csv/{category}.csv")
         put_books_info_in_csv(url)
         print('\n**** Success ****\n')
     except IndexError:

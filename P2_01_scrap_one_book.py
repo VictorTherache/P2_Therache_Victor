@@ -146,9 +146,9 @@ def put_book_info_in_csv(url):
     headers = ['url', 'upc', 'title', 'price_including_taxe', 'price_excluding_taxe', 
                'number_available', 'product_description', 'category', 'review_rating',
                'image_url']
-    with open(f'{category}.csv', 'a', newline='', encoding='utf-8') as outfile:
+    with open(f'./books_csv/{category}.csv', 'a', newline='', encoding='utf-8') as outfile:
         writer = csv.DictWriter(outfile, fieldnames = headers)
-        if os.stat(f'{category}.csv').st_size == 0: #check if file is empty so we can add headers
+        if os.stat(f'./books_csv/{category}.csv').st_size == 0: #check if file is empty so we can add headers
             writer.writeheader()
         writer.writerow({'url' : url, 
                          'upc': book_info[0][2][0], 
@@ -167,8 +167,11 @@ if __name__ == '__main__':
         url = sys.argv[1]
         book_info = get_book_info(url)
         category = book_info[0][4]
-        if os.path.exists(f"{category}.csv"):
-            os.remove(f"{category}.csv")
+        if os.path.exists(f"./books_csv/{category}.csv"):
+            print('OUI')
+            os.remove(f"./books_csv/{category}.csv")
+        if not os.path.exists('./books_csv'):
+            os.mkdir('./books_csv')
         put_book_info_in_csv(url)
         download_book_image(url)
         print('\n**** Success ****\n')

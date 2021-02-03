@@ -45,8 +45,8 @@ if __name__ == '__main__':
         homepage_url = "https://books.toscrape.com/"
         category_array = get_category(homepage_url)
         for category in category_array:
-            if os.path.exists(f"{category}.csv"):
-                os.remove(f"{category}.csv")
+            if os.path.exists(f"./books_csv/{category}.csv"):
+                os.remove(f"./books_csv/{category}.csv")
         scrap_all_books(homepage_url)
         print('\n**** Success ****\n')
     except requests.exceptions.RequestException as e: 
