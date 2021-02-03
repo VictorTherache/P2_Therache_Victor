@@ -29,6 +29,16 @@ def get_categories_url(homepage_url):
                 + link['href'])
         return categories_array
 
+def get_homepage_categories(homepage_url):
+    category_url = []
+    response = requests.get(homepage_url, stream = True)
+    soup = BeautifulSoup(response.text, 'lxml') 
+    categories = soup.find('ul', {'class': 'nav-list'})
+    categories = categories.find_all('a')
+    for category in categories:
+        category_url.append(category.text.strip())
+    return category_url
+
 
 def scrap_all_books(homepage_url):
     """
@@ -43,10 +53,10 @@ def scrap_all_books(homepage_url):
 if __name__ == '__main__':
     try:
         homepage_url = "https://books.toscrape.com/"
-        category_array = get_category(homepage_url)
-        for category in category_array:
-            if os.path.exists(f"./books_csv/{category}.csv"):
-                os.remove(f"./books_csv/{category}.csv")
+        # check_files(category)
+        categories_array = get_homepage_categories(homepage_url)
+        for category in categories_array:
+            check_files(category)
         scrap_all_books(homepage_url)
         print('\n**** Success ****\n')
     except requests.exceptions.RequestException as e: 
