@@ -163,6 +163,9 @@ def put_book_info_in_csv(url):
                          'image_url': book_info[0][5]})
     
 def check_files(category):
+    """
+    Check if file or directory exist and create it when needed
+    """
     if not os.path.exists('./Books'):
         os.mkdir('./Books')
     if not os.path.exists(f'./Books/{category}'):
