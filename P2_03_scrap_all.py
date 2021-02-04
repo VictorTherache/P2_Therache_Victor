@@ -53,7 +53,6 @@ def scrap_all_books(homepage_url):
 if __name__ == '__main__':
     try:
         homepage_url = "https://books.toscrape.com/"
-        # check_files(category)
         categories_array = get_homepage_categories(homepage_url)
         for category in categories_array:
             check_files(category)
