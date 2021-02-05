@@ -30,6 +30,9 @@ def get_categories_url(homepage_url):
         return categories_array
 
 def get_homepage_categories(homepage_url):
+    """
+    Return an array of all categories so the files can be checked
+    """
     category_url = []
     response = requests.get(homepage_url, stream = True)
     soup = BeautifulSoup(response.text, 'lxml') 
